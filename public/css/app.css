@@ -1,0 +1,6 @@
+div#theme-settings-expand {
+    display: none !important;
+}
+.notyf__message {
+    cursor: pointer !important;
+}
