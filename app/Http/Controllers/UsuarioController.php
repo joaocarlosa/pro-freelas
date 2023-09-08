@@ -48,45 +48,45 @@ class UsuarioController extends Controller
     {
         return view('pages.perfil-freelancer',[]);
     }
-    
+
     public function cadastro(Request $request)
     {
         return view('pages.cadastro');
     }
-    
+
     public function cadastrar(Request $request)
     {
-        
-        
-        
+
         $data = $request->all();
-        
+
         $emailExiste    = User::where('email',$data['email'])->count();
         $telefoneExiste = User::where('phone',$data['phone'])->count();
-        
-        
-        
+
+        $request->validate([
+           'sobrenome' => 'required',
+        ]);
+
         if($emailExiste)
         {
-            Session::flash('message', 'Já existe um usuario cadastrado com essse email, tente outro'); 
-            Session::flash('alert-class', 'alert-danger'); 
+            Session::flash('message', 'Já existe um usuario cadastrado com essse email, tente outro');
+            Session::flash('alert-class', 'alert-danger');
             return redirect()->back();
         }
-        
+
         if($telefoneExiste)
         {
-            Session::flash('message', 'Já existe um usuario cadastrado com essse número de telefone, tente outro'); 
-            Session::flash('alert-class', 'alert-danger'); 
+            Session::flash('message', 'Já existe um usuario cadastrado com essse número de telefone, tente outro');
+            Session::flash('alert-class', 'alert-danger');
             return redirect()->back();
         }
-        
+
         if($data['password'] != $data['confirm_password'])
         {
-            Session::flash('message', 'As senhas não estão iguais, tente novamente.'); 
-            Session::flash('alert-class', 'alert-danger'); 
+            Session::flash('message', 'As senhas não estão iguais, tente novamente.');
+            Session::flash('alert-class', 'alert-danger');
             return redirect()->back();
         }
-        
+
         /*$data = $request->validate([
             'email' => 'required',
             'firstName' => 'required',
@@ -94,7 +94,7 @@ class UsuarioController extends Controller
             'profile' => 'required',
             'password' => 'required|same:passwordConfirmation|min:6',
         ]);*/
-        
+
 
         $user = User::create([
             'nome' => $data['firstName'],
@@ -102,6 +102,7 @@ class UsuarioController extends Controller
             'password' => Hash::make($data['password']),
             'remember_token' => Str::random(10),
             'phone' => $data['phone'],
+            'sobrenome' => $data['sobrenome'],
             'profile' => $data['profile']
         ]);
 

@@ -19,15 +19,12 @@ class Dashboard extends Component
         $minhasPropostas = Proposta::where('autor_id',$user->id)->count();
         $data['minhasPropostas'] = $minhasPropostas;
 
-
         $propostasRecebidas = DB::table('propostas')
         ->leftJoin('projetos', 'propostas.projeto_id', '=', 'projetos.id')
         ->leftJoin('users', 'projetos.autor_id', '=', 'users.id')
         ->where('users.id', $user->id)
         ->orderBy('propostas.created_at', 'DESC')
-        ->get(['propostas.id','propostas.valor','propostas.aumento','propostas.autor_id','users.nome','users.sobrenome','propostas.projeto_id','projetos.status']);
-        
-        //dd($propostasRecebidas);
+        ->get(['propostas.id','propostas.valor','propostas.autor_id','users.nome','users.sobrenome','propostas.projeto_id','projetos.status']);
 
         $data['propostasRecebidas'] = $propostasRecebidas;
         $data['usuario'] = $user;
