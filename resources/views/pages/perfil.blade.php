@@ -312,22 +312,35 @@
                         <div wire:ignore.self class="profile-cover rounded-top"
                             data-background="../assets/img/profile-cover.jpg"></div>
                         <div class="card-body pb-5">
-                            <img src="../assets/img/team/profile-picture-1.jpg"
-                                class="avatar-xl rounded-circle mx-auto mt-n7 mb-4" alt="Neil Portrait">
+
+                            @if(isset(auth()->user()->foto))
+                                <img src="{{ asset('storage/' . auth()->user()->foto) }}"
+                                     class="avatar-xl rounded-circle mx-auto mt-n7 mb-4" alt="Neil Portrait">
+                            @elseif(session('image'))
+                            <img src="{{ session('image') }}"
+                                 class="avatar-xl rounded-circle mx-auto mt-n7 mb-4" alt="Neil Portrait">
+                            @else
+                                <img src="../assets/img/team/profile-picture-1.jpg"
+                                     class="avatar-xl rounded-circle mx-auto mt-n7 mb-4" alt="Neil Portrait">
+                            @endif
                             <h4 class="h3">
                                 {{ auth()->user()->nome ? auth()->user()->nome . ' ' . auth()->user()->sobrenome : 'User Name' }}
                             </h4>
                             <h5 class="fw-normal"></h5>
                             <p class="text-gray mb-4"></p>
-                            <a class="btn btn-sm btn-gray-800 d-inline-flex align-items-center me-2" href="#">
-                                <svg class="icon icon-xs me-1" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z">
-                                    </path>
-                                </svg>
-                                Alterar de perfil
-                            </a>
+                            <form action="{{route('update-profile')}}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="mb-4 d-inline-block">
+                                    <input type="file" id="uploadImage" name="image" class="d-none" accept="image/*" />
+                                    <label for="uploadImage" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center me-2">
+                                        <svg class="icon icon-xs me-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"></path>
+                                        </svg>
+                                        Alterar de perfil
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Enviar</button>
+                            </form>
                             <a class="btn btn-sm btn-secondary" href="#">Desativar conta</a>
                         </div>
                     </div>

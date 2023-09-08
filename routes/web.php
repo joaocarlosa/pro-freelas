@@ -71,7 +71,7 @@ Route::get('/projeto/{id}', ResumoProjeto::class)->name('resumo');
 
 Route::get('/cadastro', [UsuarioController::class, 'cadastro'])->name('usuario.cadastro');
 Route::get('/cadastrar', [UsuarioController::class, 'cadastrar'])->name('cadastrar-perfil');
-
+Route::post('/update-profile', [UsuarioController::class, 'updateProfile'])->name('update-profile');
 
 Route::get('/freelancer/{id}', PerfilFreelancer::class)->name('mostrar-perfil');
 

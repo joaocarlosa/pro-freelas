@@ -49,6 +49,26 @@ class UsuarioController extends Controller
         return view('pages.perfil-freelancer',[]);
     }
 
+    public function updateProfile(Request $request)
+    {
+        $this->validate($request, [
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ],[
+            'image.required' => 'Por favor selecione uma imagem.',
+            'image.image' => 'O arquivo selecionado não é uma imagem.',
+            'image.mimes' => 'O arquivo selecionado não é uma imagem.',
+            'image.max' => 'O arquivo selecionado é muito grande.',
+        ]);
+
+        $image_path = $request->file('image')->store('image', 'public');
+
+        Auth::user()->update(['foto' => $image_path]);
+
+        return back()
+            ->with('success','Sua foto de perfil foi atualizada com sucesso.')
+            ->with('image',$image_path);
+    }
+
     public function cadastro(Request $request)
     {
         return view('pages.cadastro');

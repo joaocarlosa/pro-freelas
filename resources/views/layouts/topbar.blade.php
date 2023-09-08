@@ -38,7 +38,7 @@
               <a href="#" class="list-group-item list-group-item-action border-bottom">
                 <div class="row align-items-center">
                   <div class="col-auto">
-                    <!-- Avatar -->
+                    <!-- Avatar -->1
                     <img alt="Image placeholder" src="/assets/img/team/profile-picture-1.jpg" class="avatar-md rounded">
                   </div>
                   <div class="col ps-0 ms-2">
@@ -148,7 +148,14 @@
           <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
             <div class="media d-flex align-items-center">
-              <img class="avatar rounded-circle" alt="Image placeholder" src="/assets/img/team/profile-picture-1.jpg">
+
+                @if (auth()->user()->foto)
+                    <img class="avatar rounded-circle" alt="Image placeholder" src="{{ asset('storage/' . auth()->user()->foto) }}">
+                @else
+                    <img class="avatar rounded-circle" alt="Image placeholder" src="/assets/img/team/profile-picture-1.jpg">
+                @endif
+
+
               <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
                 <span
                   class="mb-0 font-small fw-bold text-gray-900">{{  auth()->user()->nome ? auth()->user()->nome . ' ' . auth()->user()->sobrenome : 'User Name'}}</span>
