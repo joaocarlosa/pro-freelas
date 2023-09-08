@@ -26,7 +26,8 @@ class User extends Authenticatable
         'descricao',
         'phone',
         'texmpo_xp',
-        'country'
+        'country',
+        'foto'
     ];
     protected $guarded=[];
 

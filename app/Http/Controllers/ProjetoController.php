@@ -15,6 +15,7 @@ class ProjetoController extends Controller
 {
     public function salvarProjeto(Request $request)
     {
+
         $user = Auth::user();
         $data = $request->validate([
             'titulo' => 'required|min:10',
