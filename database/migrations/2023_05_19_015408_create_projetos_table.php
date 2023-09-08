@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('titulo');
             $table->string('descricao');
-            $table->string('autor_id');
+            $table->unsignedBigInteger('autor_id');
             $table->string('arquivo')->nullable();
             $table->string('link')->nullable();
             $table->integer('categoria_id');
@@ -27,6 +27,8 @@ return new class extends Migration
             $table->decimal('investimento_inicio')->nullable();
             $table->decimal('investimento_fim')->nullable();
             $table->timestamps();
+
+            $table->foreign('autor_id')->references('id')->on('users');
         });
     }
 
